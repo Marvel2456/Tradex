@@ -1,0 +1,2 @@
+# Tradex
+Trading app
