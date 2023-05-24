@@ -146,6 +146,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Africa/Lagos'
 
 CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
 
 
 #  Celery Beat

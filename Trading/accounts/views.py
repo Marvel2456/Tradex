@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 import random
 from .tasks import update_trade_data
 from django.http import JsonResponse
+from decimal import Decimal
+from bson.decimal128 import Decimal128
 
 # Create your views here.
 
@@ -64,27 +66,25 @@ def dashboard_view(request):
     context = {
         'trade': trade
     }
-    return render(request, 'accounts/dashboard.html', context)
+    return render(request, 'accounts/admin_dashboard.html', context)
 
 
 @login_required
-def make_trade(request):
+def make_trade_view(request):
+    profit = []
+    loss = []
     if request.method == 'POST':
         trader = request.user.trader
-        amount = trader.balance
-        # Calculate profit/loss based on your trading logic
-        profit = []
-        loss = []
-        if profit_loss > 0:
-            profit.append[profit_loss/100]
-        elif profit_loss < 0:
-            loss.append[profit_loss/100]
-        # For example, assuming a random profit/loss between -10 to 10
+        amount = Decimal(str(trader.balance))
+      
+        # Assuming a random profit/loss between -10 to 10
         profit_loss = round(random.uniform(-10, 10), 2)
-        trader.balance += profit_loss
+     
+        profit_loss_decimal = Decimal(str(profit_loss))
+        trader.balance = Decimal(str(trader.balance.to_decimal())) + profit_loss_decimal
         trader.save()
-        Trade.objects.create(trader=trader, amount=amount)
-
+        Trade.objects.create(trader=trader, profit_loss=profit_loss, amount=amount )
+        
         # Call the Celery task to update trade data and plot the graph
         update_trade_data.delay(trader.id)
 
@@ -108,6 +108,16 @@ def trader_dashboard_view(request):
     }
     return render(request, 'accounts/trader_dashboard.html', context)
 
+
+@login_required(login_url=('login'))
+def trader_view(request):
+    trader = Trader.objects.all()
+    
+    context = {
+        'trader': trader,
+
+    }
+    return render(request, 'trading/traders.html', context)
 
 
 def get_trade_data(request):

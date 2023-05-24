@@ -10,6 +10,7 @@
             <div class="col-auto">
                 <h1 class="app-page-title mb-0">Trades</h1>
             </div>
+            <canvas id="profitLossChart"></canvas>
             
         </div><!--row-->
        
@@ -25,28 +26,29 @@
                             <table class="table app-table-hover mb-0 text-left" id="example">
                                 <thead>
                                     <tr>
-                                        <th class="cell">Trader</th>
                                         <th class="cell">Balance</th>
-                                        <th class="cell">Profit/Loss</th>
                                         <th class="cell">Date/Time</th>
-                                        <th class="cell"></th>
+                                        <th class="cell">Profit/Loss</th>
+                                        <th class="cell">Profit</th>
+                                        <th class="cell">Loss</th>
                                         <th class="cell"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <div class="m-2 py-2">
-                                        <a class="btn app-btn-secondary " data-bs-toggle="modal" data-bs-target="#addInventoryModal">
-                                            <i class="fas fa-plus"></i>
-                                            Start Trade
-                                        </a>
+                                        <form action="{% url 'make_trade' %}" method="post" id="start-trade-form">
+                                            {% csrf_token %}
+                                            <button class="btn app-btn-secondary " id="start-trade-btn">
+                                                <i class="fas fa-plus"></i>
+                                                Start Trade
+                                            </button>
+                                        </form>
                                     </div>    
                                     {% for trade in trade %}
                                     <tr>
-                                        <td class="cell"><span class="truncate"></span></td>
-                                        <td class="cell"></td>
-                                        <td class="cell"></span></td>
-                                        <td class="cell"></td>
-                                        
+                                        <td class="cell"><span class="truncate">{{trade.amount}}</span></td>
+                                        <td class="cell">{{trade.timestamp}}</td>
+                                        <td class="cell">{{trade.profit_loss}}</td>
                                         
                                     </tr>
                                     {% endfor %}
@@ -65,5 +67,60 @@
         
     </div><!--//container-fluid-->
 </div><!--//app-content-->
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+     // Chart.js configuration
+     document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve the necessary data from the HTML template
+        var timestamps = JSON.parse('{{ timestamps|safe }}');  // Retrieve the JSON timestamps
+      
+        var profiLosstData = {{ profit_loss|safe }};
+      
+        // Create the chart using Chart.js
+        var ctx = document.getElementById('profitLossChart').getContext('2d');
+        var chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: timestamps,
+            datasets: [
+              {
+                label: 'Profit',
+                data: profitLossData,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              },
+              
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Timestamp'
+                }
+              },
+              y: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Profit/Loss'
+                }
+              }
+            }
+          }
+        });
+      });
+      
+      
+      
+</script>
 
 {% endblock content %}
