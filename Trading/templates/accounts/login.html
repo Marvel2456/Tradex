@@ -1,34 +1,63 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <title>CLT {% block title %} {% endblock title %}</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Quicksales login">
+    <meta name="author" content="MARVEX">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="{% static 'assets/plugins/fontawesome/js/all.min.js' %}"></script>
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="{% static 'assets/css/portal.css' %}">
 
-{% block content %}
-<div class="row py-5 mt-5">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <div class="card border-0">
-            <div class="card-body">
-                <div class="card-title py-3" style="text-align: center;">
-                    <h4 class="">Login</h4>
-                </div>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <input type="text" name="username" placeholder="Username" class="form-control">
-                    </div>
-                    <div class="input-group mb-2">
-                        <input type="password" name="password" placeholder="Password" class="form-control">
-                    </div>
-                    <input type="Submit" name="Login" class="btn btn-primary" style="width: 100%;">
-                </form>
-                {% for message in messages %}
-                        <p>{{message}}</p>
-                {% endfor %}
-                <div style="text-align: center;">
-                    {% comment %} <small>do not have an account <a href="{% url 'signup_page' %}">sign up</a></small><br> {% endcomment %}
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4"></div>
-</div>
-{% endblock content %}
+</head> 
+
+<body class="app app-login p-0">   
+    
+	    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+		    <div class="d-flex flex-column align-content-center">
+			    <div class="app-auth-body mx-auto">	
+				    <div class="app-auth-branding mb-4"><a class="app-logo" href="#"><h1>FT9ja</h1></a></div>
+			        <div class="auth-form-container text-start">
+						<form class="auth-form login-form" method="post"> 
+							{% csrf_token %}        
+							<div class="email mb-3">
+								<label class="sr-only" for="">Username</label>
+								<input id="signin-email" name="username" type="text" class="form-control signin-email" placeholder="username" required="required">
+							</div><!--//form-group-->
+							<div class="password mb-3">
+								<label class="sr-only" for="signin-password">Password</label>
+								<input id="signin-password" name="password" type="password" class="form-control signin-password" placeholder="Password" required="required">
+								<div class="extra mt-3 row justify-content-between">
+								</div><!--//extra-->
+							</div><!--//form-group-->
+							<div class="text-center">
+								<button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Log In</button>
+							</div>
+						</form>
+					</div><!--//auth-form-container-->	
+                    <small>do not have an account <a href="{% url 'signup' %}">sign up</a></small><br> 
+			    </div><!--//auth-body-->
+		    
+			    <footer class="app-auth-footer">
+				    <div class="container text-center py-3">
+			        
+				    </div>
+			    </footer><!--//app-auth-footer-->	
+		    </div><!--//flex-column-->   
+	    </div><!--//auth-main-col-->
+    
+    </div><!--//row-->
+	<script src="{% static 'assets/js/jQuery 3.6.1.min.js' %}"></script>
+</body>
+</html> 
+
