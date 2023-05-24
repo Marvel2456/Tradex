@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Inventory {% endblock title %}
+
+{% block content %}
+<div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        
+        <div class="row g-3 mb-4 align-items-center justify-content-between">
+            <div class="col-auto">
+                <h1 class="app-page-title mb-0">Trades</h1>
+            </div>
+            <canvas id="profitLossChart"></canvas>
+            
+        </div><!--row-->
+       
+        <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-0">
+            <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Trades</a>
+        </nav>
+        
+        <div class="tab-content" id="orders-table-tab-content">
+            <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+                <div class="app-card app-card-orders-table shadow-sm mb-5">
+                    <div class="app-card-body">
+                        <div class="table-responsive">
+                            <table class="table app-table-hover mb-0 text-left" id="example">
+                                <thead>
+                                    <tr>
+                                        <th class="cell">Balance</th>
+                                        <th class="cell">Date/Time</th>
+                                        <th class="cell">Profit/Loss</th>
+                                        <th class="cell">Profit</th>
+                                        <th class="cell">Loss</th>
+                                        <th class="cell"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div class="m-2 py-2">
+                                        <form action="{% url 'make_trade' %}" method="post" id="start-trade-form">
+                                            {% csrf_token %}
+                                            <button class="btn app-btn-secondary " id="start-trade-btn">
+                                                <i class="fas fa-plus"></i>
+                                                Start Trade
+                                            </button>
+                                        </form>
+                                    </div>    
+                                    {% for trade in trade %}
+                                    <tr>
+                                        <td class="cell"><span class="truncate">{{trade.amount}}</span></td>
+                                        <td class="cell">{{trade.timestamp}}</td>
+                                        <td class="cell">{{trade.profit_loss}}</td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div><!--table-responsive-->
+                       
+                    </div><!--app-card-body-->		
+                </div><!--app-card-->
+                
+            </div><!--tab-pane-->
+            
+        </div><!--//tab-content-->
+        
+    </div><!--//container-fluid-->
+</div><!--//app-content-->
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+     // Chart.js configuration
+     document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve the necessary data from the HTML template
+        var timestamps = JSON.parse('{{ timestamps|safe }}');  // Retrieve the JSON timestamps
+      
+        var profiLosstData = {{ profit_loss|safe }};
+      
+        // Create the chart using Chart.js
+        var ctx = document.getElementById('profitLossChart').getContext('2d');
+        var chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: timestamps,
+            datasets: [
+              {
+                label: 'Profit',
+                data: profitLossData,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+              },
+              
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Timestamp'
+                }
+              },
+              y: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Profit/Loss'
+                }
+              }
+            }
+          }
+        });
+      });
+      
+      
+      
+</script>
+
+{% endblock content %}
