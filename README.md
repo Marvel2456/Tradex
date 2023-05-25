@@ -60,11 +60,11 @@ After you're finished please remove all the comments and instructions!
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [your_project_name] <a name="about-project"></a>
+# 📖 [Tradex] <a name="about-project"></a>
 
 > Describe your project in 1 or 2 sentences.
 
-**[your_project__name]** is a...
+**[Tradex]** is a trading software, where traders trade and are able to monitot their trade. It is...
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -75,21 +75,22 @@ After you're finished please remove all the comments and instructions!
 <details>
   <summary>Client</summary>
   <ul>
-    <li><a href="https://reactjs.org/">React.js</a></li>
+    <li><a href="https://getbootstrap.com/">Bootstrap</a></li>
   </ul>
 </details>
 
 <details>
   <summary>Server</summary>
   <ul>
-    <li><a href="https://expressjs.com/">Express.js</a></li>
+    <li><a href="https://www.djangoproject.com/">Django</a></li>
   </ul>
 </details>
 
 <details>
 <summary>Database</summary>
   <ul>
-    <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
+    <li><a href="https://www.sqlite.org/">SQLite</a></li>
+    <li><a href="https://www.mongodb.com/">Mongodb</a></li>
   </ul>
 </details>
 
@@ -99,9 +100,9 @@ After you're finished please remove all the comments and instructions!
 
 > Describe between 1-3 key features of the application.
 
-- **[key_feature_1]**
-- **[key_feature_2]**
-- **[key_feature_3]**
+- **[Traders Dashboard]**
+- **[Admin Dashboard]**
+- **[Trade Functionality]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -111,7 +112,7 @@ After you're finished please remove all the comments and instructions!
 
 > Add a link to your deployed project.
 
-- [Live Demo Link](https://google.com)
+- [Live Demo Link](http://marvex.pythonanywhere.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -127,6 +128,7 @@ To get a local copy up and running, follow these steps.
 
 In order to run this project you need:
 
+To have a computer, a code editor, a github account and some basci understand of git
 <!--
 Example command:
 
@@ -139,6 +141,7 @@ Example command:
 
 Clone this repository to your desired folder:
 
+`git clone https://github.com/Marvel2456/Tradex`
 
 <!--
 Example commands:
@@ -153,6 +156,11 @@ Example commands:
 
 Install this project with:
 
+cd to the trading folder and the run this command in your terminal
+`pip install -r requirements.txt`
+
+or `pip install requirements.txt`
+with this, all the lbraries and packages will be fully installed.
 <!--
 Example command:
 
@@ -166,6 +174,11 @@ Example command:
 
 To run the project, execute the following command:
 
+After installing, make sure your mongodb setup is properly configured, create a database, then go to the settings.py file
+in the trading folder and edit the databese name to your database name and run the following command
+`python manage.py makemigration` and `python manage.py migrate`
+After that is done, run `python manage.py runserver`
+and on another terminal, run `celery -A beat Trading -l INFO` and `celery -A worker Trading -l INFO`
 <!--
 Example command:
 
