@@ -222,6 +222,7 @@ Example:
 👤 **Author1**
 
 - GitHub: [@gMarvel2456](https://github.com/Marvel2456)
+- Linkedin: [@eseosa idemudia](https://www.linkedin.com/in/eseosa-idemudia-a079611ba)
 
 
 >>>>>> main
