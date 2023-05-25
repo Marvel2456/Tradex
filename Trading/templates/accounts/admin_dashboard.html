@@ -26,8 +26,8 @@
                                 <thead>
                                     <tr>
                                         <th class="cell">Trader</th>
-                                        <th class="cell">Balance</th>
-                                        <th class="cell">Profit/Loss</th>
+                                        <th class="cell">Balance($)</th>
+                                        <th class="cell">Profit/Loss(4)</th>
                                         <th class="cell">Date/Time</th>
                                         <th class="cell"></th>
                                         <th class="cell"></th>
@@ -35,17 +35,14 @@
                                 </thead>
                                 <tbody>
                                     <div class="m-2 py-2">
-                                        <a class="btn app-btn-secondary " data-bs-toggle="modal" data-bs-target="#addInventoryModal">
-                                            <i class="fas fa-plus"></i>
-                                            Add Inventory
-                                        </a>
+                                        
                                     </div>    
                                     {% for trade in trade %}
                                     <tr>
-                                        <td class="cell"><span class="truncate"></span></td>
-                                        <td class="cell"></td>
-                                        <td class="cell"></span></td>
-                                        <td class="cell"></td>
+                                        <td class="cell">{{trade.trader}}<span class="truncate"></span></td>
+                                        <td class="cell">{{trade.amount}}</td>
+                                        <td class="cell">{{trade.profit_loss}}</span></td>
+                                        <td class="cell">{{trade.timestamp}}</td>
                                         
                                         
                                     </tr>

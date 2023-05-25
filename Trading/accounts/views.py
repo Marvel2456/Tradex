@@ -117,7 +117,7 @@ def trader_view(request):
         'trader': trader,
 
     }
-    return render(request, 'trading/traders.html', context)
+    return render(request, 'accounts/traders.html', context)
 
 
 def get_trade_data(request):
